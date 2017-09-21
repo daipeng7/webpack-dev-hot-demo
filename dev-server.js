@@ -1,12 +1,13 @@
 const express = require( 'express' );
 const webpack = require( 'webpack' );
-
+const opn =require( 'opn' );//node-open的增强版
 
 const config = require( './webpack.config.js' );
 
 const app = express();
 const compiler = webpack( config );
 
+const port = 3000;
 // 在express中中间件的用法
 /**
  * webpack-dev-middleware  伺服器
@@ -40,7 +41,11 @@ compiler.plugin('compilation', function (compilation) {
 app.use( webpackDevMiddleware );
 
 app.use( hotMiddleWare );
-  
-app.listen( 3000, ()=>{
+webpackDevMiddleware.waitUntilValid( ()=>{
+    opn( 'HTTP://localhost:3000',{
+        // app : ['firefox']//默认浏览器
+    } );
+} );
+app.listen( port, ()=>{
     console.log( 'express server running' );
 } );

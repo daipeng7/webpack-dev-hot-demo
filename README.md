@@ -18,5 +18,5 @@ webpack在开发模式下的自动刷新功能，官方提供了webpack-dev-serv
 #### demo查看方法： ####
 1. npm install
 2. npm run server
-3. localhost:3000/index.html  这里就没有使用自动打开页面的插件了
+3. localhost:3000/index.html  
 
