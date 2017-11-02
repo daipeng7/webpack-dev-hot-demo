@@ -33,6 +33,19 @@ webpack在开发模式下的自动刷新功能，官方提供了webpack-dev-serv
             设置为绝对路径，也是可以的。一般用法为直接打包到CDN或者公司静态资源服务器。
     （5）、webpack-dev-server   output.publicPath  这个设置的地址是访问打包资源相当于webpack.output.path。但是静态资源还是走的webpack.output.publicPath。所以建议设置为一致。
     （6）、html-webpack-plugin 
-            template 路径是相对于context的路径                  this.options.template = this.getFullTemplatePath(this.options.template, compiler.context);
-            filename  路径是相对于output.path的路径             this.options.filename = path.relative(compiler.options.output.path, filename);
+            template 
+                路径是相对于context的路径                  
+                this.options.template = this.getFullTemplatePath(this.options.template, compiler.context);
+            filename  
+                路径是相对于output.path的路径         
+                在 webpack-dev-server 中，则相对于 webpack-dev-server 配置的 publicPath.   
+                this.options.filename = path.relative(compiler.options.output.path, filename);
+                
+             若 webpack-dev-server 中的 publicPath 和 ouput.publicPath 不一致，在这种配置下使用html-webpack-plugin是有如下问题：
+                自动引用的路径仍然以 ouput.publicPath 为准，和 webpack-dev-server 提供的资源访问路径不一致，从而不能正常访问；
+                浏览 index.html 需要加上 webpack-dev-server 配置的 publicPath 才能访问（http://localhost:8282/web/）。
+
+             这两个问题也反推出了最方便的配置为：
+                ouput.publicPath 和 webpack-dev-server 的publicPath 均配置为'/'，vue-cli 就是这种配置
+                template 放在根目录，html-webpack-plugin 不用修改参数的路径，filename 采用默认值。
                   

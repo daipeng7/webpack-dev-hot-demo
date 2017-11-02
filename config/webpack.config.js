@@ -13,7 +13,7 @@ module.exports = {
     output : {
         // 一般配置到打包输出的一级目录
         path : path.resolve(__dirname, '../dist'),
-        // publicPath : './dist/',
+        publicPath : '/',
         // 可以指定输出到后续子目录
         filename : 'js/[name].boundle.js'
     },
@@ -29,6 +29,21 @@ module.exports = {
                     fallback : 'style-loader',//如果css-loader不能解析，就使用该loader
                     // publicPath : ''//覆盖loader中的publicPath
                 }) 
+            },
+            {
+                test : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader : 'url-loader',
+                options : {
+                    limit : 10000,
+                    name : 'img/[name].[hash:7].[ext]',
+                    // 当超过大小时，指定加载器。
+                    fallback : 'file-loader'
+                }
+            },
+            {
+                test : /\.(htm|html)$/i,
+                // 处理html页面中的img以路径引用问题
+                loader : 'html-withimg-loader'
             }
         ]
     },
@@ -62,5 +77,16 @@ module.exports = {
             filename : './css/[name].[contenthash].css',
             allChunks : true //从所有相依赖的模块中提取CSS
         })
-    ]
+    ],
+    // 性能提示
+    performance : {
+        // 超大提示，改提示不友好，会展示的页面上，默认warning
+        // hints : 'error',
+        // 静态支援文件大小阀值，默认250000
+        // maxAssetSize : 600,
+        // 一个提示过滤器
+        // assetFilter : function(assetFilename){
+        //     console.log(assetFilename);
+        // }
+    }
 }
