@@ -7,13 +7,15 @@ const webpack = require( 'webpack' );
 module.exports = {
     devtool : '#cheap-module-eval-source-map',
     entry : {
-        app : ['./dev-client' ,'./src/js/index.js'],
-        print : ['./dev-client' ,'./src/js/print.js']
+        app : ['./build/dev-client' ,'./src/js/index.js'],
+        print : ['./build/dev-client' ,'./src/js/print.js']
     },
     output : {
-        path : path.resolve(__dirname, 'dist'),
-        publicPath : '/',
-        filename : '[name].boundle.js'
+        // 一般配置到打包输出的一级目录
+        path : path.resolve(__dirname, '../dist'),
+        // publicPath : './dist/',
+        // 可以指定输出到后续子目录
+        filename : 'js/[name].boundle.js'
     },
     // 模块配置
     module : {
@@ -34,8 +36,8 @@ module.exports = {
     resolve : {
         // 模块别名设置
         alias : {
-            'assetCSS' : path.resolve( __dirname, 'src', 'css' ),
-            'assetJS' : path.resolve( __dirname, 'src', 'js' )
+            'assetCSS' : path.resolve( __dirname, '..', 'src', 'css' ),
+            'assetJS' : path.resolve( __dirname, '..', 'src', 'js' )
         },
         // 扩展名设置，默认.js && .json,作用是：能够在require模块时不带扩展名，如果设置'*'
         extensions : [ '.js', '.json', 'jsx', '.css', '.less' ],
@@ -50,14 +52,14 @@ module.exports = {
         // new CleanWebpackPlugin( ['dist/*'] ),
         new HtmlWebpackPlugin({
             title : '测试 webpack-dev-middleware',
-            filename : path.resolve( __dirname, 'dist','index.html' ),
-            template : './index.html',
+            filename : 'index.html',
+            template : 'index.html',
             inject : true,
             hash : true
         }),
         // 提取出css样式
         new ExtractTextWebpackPlugin({
-            filename : './dist/css/[name].[contenthash].css',
+            filename : './css/[name].[contenthash].css',
             allChunks : true //从所有相依赖的模块中提取CSS
         })
     ]

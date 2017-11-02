@@ -2,11 +2,11 @@ const express = require( 'express' );
 const webpack = require( 'webpack' );
 const opn =require( 'opn' );//node-open的增强版
 
-const config = require( './webpack.config.js' );
+const config = require( '../config/webpack.config.js' );
 
 const app = express();
 const compiler = webpack( config );
-
+// console.log(config)
 const port = 3000;
 // 在express中中间件的用法
 /**
