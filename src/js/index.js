@@ -1,1 +1,3 @@
-const indexCSS = require( 'assetCSS/index' );
+
+require( '../css/index' );
+ 

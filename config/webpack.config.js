@@ -7,15 +7,15 @@ const webpack = require( 'webpack' );
 module.exports = {
     devtool : '#cheap-module-eval-source-map',
     entry : {
-        app : ['./build/dev-client' ,'./src/js/index.js'],
-        print : ['./build/dev-client' ,'./src/js/print.js']
+        app : ['./build/dev-client' ,'./src/js/index.js']
     },
     output : {
         // 一般配置到打包输出的一级目录
         path : path.resolve(__dirname, '../dist'),
         publicPath : '/',
         // 可以指定输出到后续子目录
-        filename : 'js/[name].boundle.js'
+        filename : 'js/[name].[chunkhash].boundle.js',
+        chunkFilename : 'js/[id].[chunkhash].js'
     },
     // 模块配置
     module : {
@@ -40,6 +40,10 @@ module.exports = {
                     fallback : 'file-loader'
                 }
             },
+            // {
+            //     test : /\.js$/,
+            //     loader : 'babel-loader'
+            // },
             {
                 test : /\.(htm|html)$/i,
                 // 处理html页面中的img以路径引用问题
@@ -74,7 +78,7 @@ module.exports = {
         }),
         // 提取出css样式
         new ExtractTextWebpackPlugin({
-            filename : './css/[name].[contenthash].css',
+            filename : './css/index.[chunkhash].css',
             allChunks : true //从所有相依赖的模块中提取CSS
         })
     ],

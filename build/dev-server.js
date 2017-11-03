@@ -1,7 +1,7 @@
 const express = require( 'express' );
 const webpack = require( 'webpack' );
 const opn =require( 'opn' );//node-open的增强版
-
+const history =  require('connect-history-api-fallback');
 const config = require( '../config/webpack.config.js' );
 
 const app = express();
@@ -46,6 +46,7 @@ webpackDevMiddleware.waitUntilValid( ()=>{
         // app : ['firefox']//默认浏览器
     } );
 } );
+app.use( history() );
 app.listen( port, ()=>{
     console.log( 'express server running' );
 } );
