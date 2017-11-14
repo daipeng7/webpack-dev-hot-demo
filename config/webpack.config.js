@@ -32,13 +32,24 @@ module.exports = {
             },
             {
                 test : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader : 'url-loader',
-                options : {
-                    limit : 10000,
-                    name : 'img/[name].[hash:7].[ext]',
-                    // 当超过大小时，指定加载器。
-                    fallback : 'file-loader'
-                }
+                use : [
+                    {
+                        loader : 'url-loader',
+                        options : {
+                            limit : 10000,
+                            name : 'img/[name].[hash:7].[ext]',
+                            // 当超过大小时，指定加载器。
+                            fallback : 'file-loader'
+                        }
+                    },
+                    {
+                        loader : 'image-webpack-loader',
+                        options : {
+                            bypassOnDebug : true
+                        }
+                    }
+                ]
+                
             },
             // {
             //     test : /\.js$/,
