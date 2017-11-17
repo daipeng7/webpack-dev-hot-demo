@@ -2,7 +2,7 @@ const express = require( 'express' );
 const webpack = require( 'webpack' );
 const opn =require( 'opn' );//node-open的增强版
 const history =  require('connect-history-api-fallback');
-const config = require( '../config/webpack.config.js' );
+const config = require( '../config/webpack.base.config.js' );
 
 const app = express();
 const compiler = webpack( config );
