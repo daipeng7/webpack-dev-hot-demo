@@ -7,7 +7,7 @@ const webpack = require( 'webpack' );
 module.exports = {
     devtool : '#cheap-module-eval-source-map',
     entry : {
-        app : ['./build/dev-client' ,'./src/js/index.js']
+        app : './src/main.js'
     },
     output : {
         // 一般配置到打包输出的一级目录
