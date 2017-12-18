@@ -1,2 +1,3 @@
-require( '../css/index' );
- 
+module.exports = {
+    d : 1
+}

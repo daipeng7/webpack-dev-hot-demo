@@ -1,22 +1,21 @@
 const path = require( 'path' );
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const ExtractTextWebpackPlugin = require( 'extract-text-webpack-plugin' );
 const webpack = require( 'webpack' );
 
 module.exports = {
-    devtool : '#cheap-module-eval-source-map',
+    devtool : '',
     entry : {
-        app : './src/main.js'
+        app : '../src/main.js'
     },
-    output : {
-        // 一般配置到打包输出的一级目录
-        path : path.resolve(__dirname, '../dist'),
-        publicPath : '/',
-        // 可以指定输出到后续子目录
-        filename : 'js/[name].[chunkhash].boundle.js',
-        chunkFilename : 'js/[id].[chunkhash].js'
-    },
+    // output : {
+    //     // 一般配置到打包输出的一级目录
+    //     path : path.resolve(__dirname, '../dist'),
+    //     publicPath : '/',
+    //     // 可以指定输出到后续子目录
+    //     filename : 'js/[name].[chunkhash].boundle.js',
+    //     chunkFilename : 'js/[id].[chunkhash].js'
+    // },
     // 模块配置
     module : {
         // 模块规则（配置loader、解析器等选项）
@@ -24,11 +23,14 @@ module.exports = {
             {
                 test : /\.css$/,
                 // 提取loader中的css样式
-                use : ExtractTextWebpackPlugin.extract({
-                    use : 'css-loader', //用什么loader解析
-                    fallback : 'style-loader',//如果css-loader不能解析，就使用该loader
-                    // publicPath : ''//覆盖loader中的publicPath
-                }) 
+                use : [
+                    {
+                        loader : "css-loader",
+                        options : {
+                            fallback : "style-loader"
+                        }
+                    }
+                ]
             },
             {
                 test : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -49,12 +51,11 @@ module.exports = {
                         }
                     }
                 ]
-                
             },
-            // {
-            //     test : /\.js$/,
-            //     loader : 'babel-loader'
-            // },
+            {
+                test : /\.js$/,
+                loader : 'babel-loader'
+            },
             {
                 test : /\.(htm|html)$/i,
                 // 处理html页面中的img以路径引用问题
@@ -78,18 +79,9 @@ module.exports = {
         //   ]
     },
     plugins : [
-        new webpack.HotModuleReplacementPlugin(),
-        // new CleanWebpackPlugin( ['dist/*'] ),
-        new HtmlWebpackPlugin({
-            title : '测试 webpack-dev-middleware',
-            filename : 'index.html',
-            template : 'index.html',
-            inject : true,
-            hash : true
-        }),
         // 提取出css样式
         new ExtractTextWebpackPlugin({
-            filename : './css/index.[chunkhash].css',
+            filename : 'css/index.[hash:16].css',
             allChunks : true //从所有相依赖的模块中提取CSS
         })
     ],

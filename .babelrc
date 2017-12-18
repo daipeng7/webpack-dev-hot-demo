@@ -1,7 +1,9 @@
 {
-    "preset" : [
-        ["env", { "modules" : false }],//设置为false不会将ES6模块语法转化为其他类型的模块
-        "stage-2"
+    "presets" : [
+        [
+            "env", 
+            { "modules" : false }
+        ]//设置为false不会将ES6模块语法转化为其他类型的模块
     ],
     "plugins" : ["transform-runtime"],
     "comments" : false
