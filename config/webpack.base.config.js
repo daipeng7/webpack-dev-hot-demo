@@ -54,7 +54,8 @@ module.exports = {
             },
             {
                 test : /\.js$/,
-                loader : 'babel-loader'
+                loader : 'babel-loader',
+                include : ["../src"]
             },
             {
                 test : /\.(htm|html)$/i,
